@@ -334,6 +334,10 @@ const cn = {
         Title: "自定义模型名",
         SubTitle: "增加自定义模型可选项，使用英文逗号隔开",
       },
+      OneAPIModel: {
+        Title: "OneAPI 模型名",
+        SubTitle: "调用的OneAPI模型，使用英文逗号隔开",
+      },
     },
 
     Model: "模型 (model)",
@@ -392,7 +396,7 @@ const cn = {
     Sysmessage: "你是一个助手",
   },
   Mask: {
-    Name: "面具",
+    Name: "Prompt(面具)",
     Page: {
       Title: "预设角色面具",
       SubTitle: (count: number) => `${count} 个预设角色定义`,
@@ -429,6 +433,24 @@ const cn = {
         Title: "分享此面具",
         SubTitle: "生成此面具的直达链接",
         Action: "复制链接",
+      },
+      FastGPT: {
+        Title: "是否调整模型参数",
+        SubTitle: "是否调整模型参数（默认关闭）",
+        Stream: {
+          Title: "是否开启流式对话（默认开启）",
+        },
+        Detail: {
+          Title: "是否返回中间值（默认关闭）",
+        },
+        API: {
+          Title: "FastGPT API Key",
+          SubTitle: "填写API（fast-开头）",
+        },
+      },
+      OneAPI: {
+        Title: "是否隐藏模型参数",
+        SubTitle: "隐藏模型参数（默认开启）",
       },
     },
   },

@@ -1,4 +1,4 @@
-export const OWNER = "Yidadaa";
+export const OWNER = "TeacherTan";
 export const REPO = "ChatGPT-Next-Web";
 export const REPO_URL = `https://github.com/${OWNER}/${REPO}`;
 export const ISSUE_URL = `https://github.com/${OWNER}/${REPO}/issues`;
@@ -9,6 +9,8 @@ export const FETCH_TAG_URL = `https://api.github.com/repos/${OWNER}/${REPO}/tags
 export const RUNTIME_CONFIG_DOM = "danger-runtime-config";
 
 export const DEFAULT_API_HOST = "https://api.nextchat.dev";
+
+export const DEFAULT_FASTGPT_BASE_URL = "http://192.168.1.206:3000";
 export const OPENAI_BASE_URL = "https://api.openai.com";
 
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/";
@@ -73,6 +75,7 @@ export enum ServiceProvider {
 export enum ModelProvider {
   GPT = "GPT",
   GeminiPro = "GeminiPro",
+  FastGPT = "FastGPT",
 }
 
 export const OpenaiPath = {
@@ -94,6 +97,7 @@ export const Google = {
   // /api/openai/v1/chat/completions
 };
 
+export const DEFAULT_ONEAPI_MODEL = "abab5.5s-chat,mixtral,openchat-3.5-0106";
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
 export const DEFAULT_SYSTEM_TEMPLATE = `
 You are ChatGPT, a large language model trained by {{ServiceProvider}}.

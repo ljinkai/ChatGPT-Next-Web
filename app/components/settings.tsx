@@ -829,7 +829,7 @@ export function Settings() {
           </ListItem>
         </List>
 
-        <SyncItems />
+        {/* <SyncItems /> */}
 
         <List>
           <ListItem
@@ -866,7 +866,7 @@ export function Settings() {
           </ListItem>
         </List>
 
-        <List>
+        {/* <List>
           <ListItem
             title={Locale.Settings.Prompt.Disable.Title}
             subTitle={Locale.Settings.Prompt.Disable.SubTitle}
@@ -896,9 +896,9 @@ export function Settings() {
               onClick={() => setShowPromptModal(true)}
             />
           </ListItem>
-        </List>
+        </List> */}
 
-        <List id={SlotID.CustomModel}>
+        {/* <List id={SlotID.CustomModel}>
           {showAccessCode && (
             <ListItem
               title={Locale.Settings.Access.AccessCode.Title}
@@ -1167,8 +1167,24 @@ export function Settings() {
               }
             ></input>
           </ListItem>
+        </List> */}
+        <List>
+          <ListItem
+            title={Locale.Settings.Access.OneAPIModel.Title}
+            subTitle={Locale.Settings.Access.OneAPIModel.SubTitle}
+          >
+            <input
+              type="text"
+              value={config.oneApiModel}
+              onChange={(e) => {
+                config.update(
+                  (config) => (config.oneApiModel = e.currentTarget.value),
+                );
+                console.log(config.oneApiModel);
+              }}
+            ></input>
+          </ListItem>
         </List>
-
         <List>
           <ModelConfigList
             modelConfig={config.modelConfig}

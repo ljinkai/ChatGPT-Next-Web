@@ -21,6 +21,7 @@ import {
   ModelType,
   useAppConfig,
   useChatStore,
+  useFastGPTChatStore,
 } from "../store";
 import { MultimodalContent, ROLES } from "../client/api";
 import {
@@ -31,6 +32,7 @@ import {
   Popover,
   Select,
   showConfirm,
+  PasswordInput,
 } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
 import Locale, { AllLangs, ALL_LANG_OPTIONS, Lang } from "../locales";
@@ -77,11 +79,12 @@ export function MaskConfig(props: {
   mask: Mask;
   updateMask: Updater<Mask>;
   extraListItems?: JSX.Element;
+  // shouldFastGPT?: boolean;
   readonly?: boolean;
   shouldSyncFromGlobal?: boolean;
 }) {
   const [showPicker, setShowPicker] = useState(false);
-
+  const [focusingInput, setFocusingInput] = useState(false);
   const updateConfig = (updater: (config: ModelConfig) => void) => {
     if (props.readonly) return;
 
@@ -163,6 +166,21 @@ export function MaskConfig(props: {
           ></input>
         </ListItem>
 
+        <ListItem
+          title={Locale.Mask.Config.OneAPI.Title}
+          subTitle={Locale.Mask.Config.OneAPI.SubTitle}
+        >
+          <input
+            type="checkbox"
+            checked={props.mask.fastgpt}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                mask.fastgpt = e.currentTarget.checked;
+              });
+            }}
+          ></input>
+        </ListItem>
+
         {!props.shouldSyncFromGlobal ? (
           <ListItem
             title={Locale.Mask.Config.Share.Title}
@@ -206,12 +224,64 @@ export function MaskConfig(props: {
       </List>
 
       <List>
-        <ModelConfigList
-          modelConfig={{ ...props.mask.modelConfig }}
-          updateConfig={updateConfig}
-        />
-        {props.extraListItems}
+        <ListItem title={"Name"} subTitle="AI Name">
+          <input
+            type="text"
+            value={props.mask.fastgptVar.name}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                mask.fastgptVar.name = e.currentTarget.value;
+                console.log(mask.fastgptVar.name);
+              });
+            }}
+          ></input>
+        </ListItem>
+        <ListItem title={"Des"} subTitle="Brief introduction">
+          <input
+            type="text"
+            value={props.mask.fastgptVar.des}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                props.mask.fastgptVar.des = e.currentTarget.value;
+              });
+            }}
+          ></input>
+        </ListItem>
+        <ListItem title={"Character personality"}>
+          <input
+            type="text"
+            value={props.mask.fastgptVar.char_personality}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                props.mask.fastgptVar.char_personality = e.currentTarget.value;
+              });
+            }}
+          ></input>
+        </ListItem>
+        <ListItem title={"Senario"}>
+          <input
+            type="text"
+            value={props.mask.fastgptVar.senario}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                props.mask.fastgptVar.senario = e.currentTarget.value;
+              });
+            }}
+          ></input>
+        </ListItem>
       </List>
+
+      {props.mask.fastgpt ? (
+        <></>
+      ) : (
+        <List>
+          <ModelConfigList
+            modelConfig={{ ...props.mask.modelConfig }}
+            updateConfig={updateConfig}
+          />
+          {props.extraListItems}
+        </List>
+      )}
     </>
   );
 }
@@ -276,6 +346,37 @@ function ContextPromptItem(props: {
           bordered
         />
       )}
+    </div>
+  );
+}
+
+function InputTextItem(props: {
+  text: string;
+  update: (text: string) => void;
+}) {
+  const [focusingInput, setFocusingInput] = useState(false);
+
+  return (
+    <div className={chatStyle["context-prompt-row"]}>
+      {!focusingInput && (
+        <>
+          <div className={chatStyle["context-drag"]}>Title</div>
+        </>
+      )}
+      <Input
+        value={props.text}
+        type="text"
+        className={chatStyle["context-content"]}
+        rows={focusingInput ? 5 : 1}
+        onFocus={() => setFocusingInput(true)}
+        onBlur={() => {
+          setFocusingInput(false);
+          // If the selection is not removed when the user loses focus, some
+          // extensions like "Translate" will always display a floating bar
+          window?.getSelection()?.removeAllRanges();
+        }}
+        onInput={(e) => props.update(e.currentTarget.value)}
+      />
     </div>
   );
 }
@@ -402,7 +503,8 @@ export function MaskPage() {
   const navigate = useNavigate();
 
   const maskStore = useMaskStore();
-  const chatStore = useChatStore();
+  const chatStore = useFastGPTChatStore();
+  // const chatStore = useChatStore();
 
   const [filterLang, setFilterLang] = useState<Lang>();
 
@@ -549,9 +651,7 @@ export function MaskPage() {
                   <div className={styles["mask-title"]}>
                     <div className={styles["mask-name"]}>{m.name}</div>
                     <div className={styles["mask-info"] + " one-line"}>
-                      {`${Locale.Mask.Item.Info(m.context.length)} / ${
-                        ALL_LANG_OPTIONS[m.lang]
-                      } / ${m.modelConfig.model}`}
+                      {m.fastgptVar.des}
                     </div>
                   </div>
                 </div>
@@ -561,7 +661,7 @@ export function MaskPage() {
                     text={Locale.Mask.Item.Chat}
                     onClick={() => {
                       chatStore.newSession(m);
-                      navigate(Path.Chat);
+                      navigate(Path.FastGPT);
                     }}
                   />
                   {m.builtin ? (

@@ -1,6 +1,6 @@
 import { BUILTIN_MASKS } from "../masks";
 import { getLang, Lang } from "../locales";
-import { DEFAULT_TOPIC, ChatMessage } from "./chat";
+import { DEFAULT_TOPIC, ChatMessage, FastgptConfig } from "./chat";
 import { ModelConfig, useAppConfig } from "./config";
 import { StoreKey } from "../constant";
 import { nanoid } from "nanoid";
@@ -17,9 +17,22 @@ export type Mask = {
   modelConfig: ModelConfig;
   lang: Lang;
   builtin: boolean;
+  //是否使用fastgpt
   fastgpt?: boolean;
-  fastgptConfig?: Record<string, any>;
+  //fastgpt的配置（detail, stream）
+  fastgptConfig: FastgptConfig;
+  //fastgpt API (Bearer token)
+  fastgptAPI: string[];
+  //fastgpt variables
+  fastgptVar: Record<string, any>;
 };
+
+export const DEFAULT_FASTGPTVAR = {
+  name: "",
+  des: "",
+  char_personality: "",
+  senario: "",
+} as Record<string, any>;
 
 export const DEFAULT_MASK_STATE = {
   masks: {} as Record<string, Mask>,
@@ -33,11 +46,31 @@ export const createEmptyMask = () =>
     id: nanoid(),
     avatar: DEFAULT_MASK_AVATAR,
     name: DEFAULT_TOPIC,
-    context: [],
-    syncGlobalConfig: true, // use global config as default
+    context: [
+      {
+        id: "text-to-pic-1",
+        role: "system",
+        content:
+          "You are an outstanding actor. Together, we are engaged in an exceptional performance. My name is Alex. You play the role of {name}, who is characterized by {char_personality}. Our current scene is {senario}",
+        date: "",
+      },
+    ],
+    syncGlobalConfig: false, // use global config as default
     modelConfig: { ...useAppConfig.getState().modelConfig },
     lang: getLang(),
     builtin: false,
+    fastgpt: true,
+    fastgptConfig: {
+      detail: false,
+      stream: true,
+    },
+    fastgptAPI: [
+      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
+      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
+      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
+      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
+    ],
+    fastgptVar: { ...DEFAULT_FASTGPTVAR },
     createdAt: Date.now(),
   }) as Mask;
 

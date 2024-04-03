@@ -320,6 +320,10 @@ const en: LocaleType = {
         Title: "Custom Models",
         SubTitle: "Custom model options, seperated by comma",
       },
+      OneAPIModel: {
+        Title: "OneAPI Model name",
+        SubTitle: "OneAPI model options, seperated by comma",
+      },
       Google: {
         ApiKey: {
           Title: "API Key",
@@ -422,6 +426,10 @@ const en: LocaleType = {
     Config: {
       Avatar: "Bot Avatar",
       Name: "Bot Name",
+      OneAPI: {
+        Title: "是否隐藏模型参数",
+        SubTitle: "隐藏模型参数（默认开启）",
+      },
       Sync: {
         Title: "Use Global Config",
         SubTitle: "Use global config in this chat",
@@ -435,6 +443,21 @@ const en: LocaleType = {
         Title: "Share This Mask",
         SubTitle: "Generate a link to this mask",
         Action: "Copy Link",
+      },
+      FastGPT: {
+        Title: "Whether it's a FastGPT conversation or not",
+        SubTitle: "Use the FastGPT configuration for conversations",
+        Stream: {
+          Title:
+            "Whether to enable streaming conversations (enabled by default)",
+        },
+        Detail: {
+          Title: "Whether to return an intermediate value (off by default)",
+        },
+        API: {
+          Title: "FastGPT API Key",
+          SubTitle: "Fill in the API (fast-start)",
+        },
       },
     },
   },

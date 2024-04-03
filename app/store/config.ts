@@ -4,6 +4,7 @@ import { getClientConfig } from "../config/client";
 import {
   DEFAULT_INPUT_TEMPLATE,
   DEFAULT_MODELS,
+  DEFAULT_ONEAPI_MODEL,
   DEFAULT_SIDEBAR_WIDTH,
   StoreKey,
 } from "../constant";
@@ -45,6 +46,8 @@ export const DEFAULT_CONFIG = {
   customModels: "",
   models: DEFAULT_MODELS as any as LLMModel[],
 
+  oneApiModel: DEFAULT_ONEAPI_MODEL,
+
   modelConfig: {
     model: "gpt-3.5-turbo" as ModelType,
     temperature: 0.5,
@@ -57,12 +60,25 @@ export const DEFAULT_CONFIG = {
     compressMessageLengthThreshold: 1000,
     enableInjectSystemPrompts: true,
     template: DEFAULT_INPUT_TEMPLATE,
+    fastgpt: {
+      stream: true,
+      detail: false,
+      variables: {},
+      apikey: {},
+    } as FastGPTModelConfig,
   },
 };
 
 export type ChatConfig = typeof DEFAULT_CONFIG;
 
 export type ModelConfig = ChatConfig["modelConfig"];
+
+export type FastGPTModelConfig = {
+  stream: boolean;
+  detail: boolean;
+  variables: Record<string, any>;
+  apikey: Record<string, any>;
+};
 
 export function limitNumber(
   x: number,
