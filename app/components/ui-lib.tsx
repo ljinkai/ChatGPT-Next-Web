@@ -485,3 +485,34 @@ export function Selector<T>(props: {
     </div>
   );
 }
+
+export function InputTextItem(props: {
+  text: string;
+  update: (text: string) => void;
+}) {
+  const [focusingInput, setFocusingInput] = useState(false);
+
+  return (
+    <div className={styles["input-text-row"]}>
+      {!focusingInput && (
+        <>
+          <div className={styles["input-text-title"]}>Title</div>
+        </>
+      )}
+      <Input
+        value={props.text}
+        type="text"
+        className={styles["input-text-content"]}
+        rows={focusingInput ? 6 : 1}
+        onFocus={() => setFocusingInput(true)}
+        onBlur={() => {
+          setFocusingInput(false);
+          // If the selection is not removed when the user loses focus, some
+          // extensions like "Translate" will always display a floating bar
+          window?.getSelection()?.removeAllRanges();
+        }}
+        onInput={(e) => props.update(e.currentTarget.value)}
+      />
+    </div>
+  );
+}

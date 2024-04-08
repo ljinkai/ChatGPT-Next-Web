@@ -312,3 +312,36 @@
     }
   }
 }
+
+.input-text-row {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+
+  // &:hover {
+  //   .context-drag {
+  //     opacity: 1;
+  //   }
+  // }
+
+  // .context-drag {
+  //   display: flex;
+  //   align-items: center;
+  //   opacity: 0.5;
+  //   transition: all ease 0.3s;
+  // }
+
+  .input-text-title {
+    margin-right: 10px;
+  }
+
+  .input-text-content {
+    flex: 1;
+    max-width: 100%;
+    text-align: left;
+  }
+
+  // .context-delete-button {
+  //   margin-left: 10px;
+  // }
+}
