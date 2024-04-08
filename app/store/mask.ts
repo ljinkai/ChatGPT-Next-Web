@@ -28,7 +28,7 @@ export type Mask = {
 };
 
 export const DEFAULT_FASTGPTVAR = {
-  name: "",
+  char_name: "",
   des: "",
   char_personality: "",
   senario: "",
@@ -51,7 +51,7 @@ export const createEmptyMask = () =>
         id: "text-to-pic-1",
         role: "system",
         content:
-          "You are an outstanding actor. Together, we are engaged in an exceptional performance. My name is Alex. You play the role of {name}, who is characterized by {char_personality}. Our current scene is {senario}",
+          "You are an outstanding actor. Together, we are engaged in an exceptional performance. My name is Alex. You play the role of {char_name}, who is characterized by {char_personality}. Our current scene is {senario}",
         date: "",
       },
     ],

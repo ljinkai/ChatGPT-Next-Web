@@ -487,24 +487,44 @@ export function Selector<T>(props: {
 }
 
 export function InputTextItem(props: {
+  title: string;
   text: string;
+  subTitle?: string;
   update: (text: string) => void;
 }) {
   const [focusingInput, setFocusingInput] = useState(false);
-
+  const textareas = document.querySelectorAll("textarea");
+  const printTextareaClassNames = () => {
+    textareas.forEach((textarea) => {
+      // console.log(textarea.className);
+    });
+  };
   return (
     <div className={styles["input-text-row"]}>
       {!focusingInput && (
-        <>
-          <div className={styles["input-text-title"]}>Title</div>
-        </>
+        // <>
+        //   <div className={styles["input-text-title"]}>{props.title}</div>
+        // </>
+        <div className={styles["list-header"]}>
+          <div className={styles["list-item-title"]}>
+            <div>{props.title}</div>
+            {props.subTitle && (
+              <div className={styles["list-item-sub-title"]}>
+                {props.subTitle}
+              </div>
+            )}
+          </div>
+        </div>
       )}
       <Input
         value={props.text}
         type="text"
         className={styles["input-text-content"]}
         rows={focusingInput ? 6 : 1}
-        onFocus={() => setFocusingInput(true)}
+        onFocus={() => {
+          setFocusingInput(true);
+          printTextareaClassNames();
+        }}
         onBlur={() => {
           setFocusingInput(false);
           // If the selection is not removed when the user loses focus, some
