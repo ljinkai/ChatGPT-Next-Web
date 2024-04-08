@@ -33,6 +33,7 @@ import {
   Select,
   showConfirm,
   PasswordInput,
+  InputTextItem,
 } from "./ui-lib";
 import { Avatar, AvatarPicker } from "./emoji";
 import Locale, { AllLangs, ALL_LANG_OPTIONS, Lang } from "../locales";
@@ -224,19 +225,19 @@ export function MaskConfig(props: {
       </List>
 
       <List>
-        <ListItem title={"Name"} subTitle="AI Name">
+        <ListItem title={"Char_Name"} subTitle="AI Name">
           <input
             type="text"
-            value={props.mask.fastgptVar.name}
+            value={props.mask.fastgptVar.char_name}
             onChange={(e) => {
               props.updateMask((mask) => {
-                mask.fastgptVar.name = e.currentTarget.value;
-                console.log(mask.fastgptVar.name);
+                mask.fastgptVar.char_name = e.currentTarget.value;
+                console.log(mask.fastgptVar.char_name);
               });
             }}
           ></input>
         </ListItem>
-        <ListItem title={"Des"} subTitle="Brief introduction">
+        {/* <ListItem title={"Des"} subTitle="Brief introduction">
           <input
             type="text"
             value={props.mask.fastgptVar.des}
@@ -246,8 +247,18 @@ export function MaskConfig(props: {
               });
             }}
           ></input>
-        </ListItem>
-        <ListItem title={"Character personality"}>
+        </ListItem> */}
+        <InputTextItem
+          title={"Des"}
+          subTitle="Brief introduction"
+          text={props.mask.fastgptVar.des}
+          update={(text) =>
+            props.updateMask((mask) => {
+              props.mask.fastgptVar.des = text;
+            })
+          }
+        />
+        {/* <ListItem title={"Character personality"}>
           <input
             type="text"
             value={props.mask.fastgptVar.char_personality}
@@ -257,8 +268,26 @@ export function MaskConfig(props: {
               });
             }}
           ></input>
-        </ListItem>
-        <ListItem title={"Senario"}>
+        </ListItem> */}
+        <InputTextItem
+          title={"Character personality"}
+          text={props.mask.fastgptVar.char_personality}
+          update={(text) =>
+            props.updateMask((mask) => {
+              mask.fastgptVar.char_personality = text;
+            })
+          }
+        />
+        <InputTextItem
+          title={"Senario"}
+          text={props.mask.fastgptVar.senario}
+          update={(text) =>
+            props.updateMask((mask) => {
+              props.mask.fastgptVar.senario = text;
+            })
+          }
+        />
+        {/* <ListItem title={"Senario"}>
           <input
             type="text"
             value={props.mask.fastgptVar.senario}
@@ -268,7 +297,7 @@ export function MaskConfig(props: {
               });
             }}
           ></input>
-        </ListItem>
+        </ListItem> */}
       </List>
 
       {props.mask.fastgpt ? (
@@ -350,36 +379,36 @@ function ContextPromptItem(props: {
   );
 }
 
-function InputTextItem(props: {
-  text: string;
-  update: (text: string) => void;
-}) {
-  const [focusingInput, setFocusingInput] = useState(false);
+// function InputTextItem(props: {
+//   text: string;
+//   update: (text: string) => void;
+// }) {
+//   const [focusingInput, setFocusingInput] = useState(false);
 
-  return (
-    <div className={chatStyle["context-prompt-row"]}>
-      {!focusingInput && (
-        <>
-          <div className={chatStyle["context-drag"]}>Title</div>
-        </>
-      )}
-      <Input
-        value={props.text}
-        type="text"
-        className={chatStyle["context-content"]}
-        rows={focusingInput ? 5 : 1}
-        onFocus={() => setFocusingInput(true)}
-        onBlur={() => {
-          setFocusingInput(false);
-          // If the selection is not removed when the user loses focus, some
-          // extensions like "Translate" will always display a floating bar
-          window?.getSelection()?.removeAllRanges();
-        }}
-        onInput={(e) => props.update(e.currentTarget.value)}
-      />
-    </div>
-  );
-}
+//   return (
+//     <div className={chatStyle["context-prompt-row"]}>
+//       {!focusingInput && (
+//         <>
+//           <div className={chatStyle["context-drag"]}>Title</div>
+//         </>
+//       )}
+//       <Input
+//         value={props.text}
+//         type="text"
+//         className={chatStyle["context-content"]}
+//         rows={focusingInput ? 6 : 1}
+//         onFocus={() => setFocusingInput(true)}
+//         onBlur={() => {
+//           setFocusingInput(false);
+//           // If the selection is not removed when the user loses focus, some
+//           // extensions like "Translate" will always display a floating bar
+//           window?.getSelection()?.removeAllRanges();
+//         }}
+//         onInput={(e) => props.update(e.currentTarget.value)}
+//       />
+//     </div>
+//   );
+// }
 
 export function ContextPrompts(props: {
   context: ChatMessage[];

@@ -368,7 +368,7 @@ const en: LocaleType = {
     },
   },
   Store: {
-    DefaultTopic: "New Conversation",
+    DefaultTopic: "Mari",
     BotHello: "Hello! How can I assist you today?",
     Error: "Something went wrong, please try again later.",
     Prompt: {
@@ -464,8 +464,8 @@ const en: LocaleType = {
   NewChat: {
     Return: "Return",
     Skip: "Just Start",
-    Title: "Pick a Mask",
-    SubTitle: "Chat with the Soul behind the Mask",
+    Title: "Pick a Character",
+    SubTitle: "Chat with the Soul behind the Character",
     More: "Find More",
     NotShow: "Never Show Again",
     ConfirmNoShow: "Confirm to disable？You can enable it in settings later.",
