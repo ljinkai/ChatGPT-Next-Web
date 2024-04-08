@@ -3,6 +3,7 @@ FROM node:18 AS base
 FROM base AS deps
 
 # RUN apk add --no-cache libc6-compat
+RUN apt-get update && apt-get install -y libc6
 
 WORKDIR /app
 
@@ -13,8 +14,7 @@ RUN yarn install
 
 FROM base AS builder
 
-# RUN apk update && apk add --no-cache git
-RUN apt-get update && apt-get add --no-cache git
+RUN apt-get update && apt-get install git
 
 ENV OPENAI_API_KEY=""
 ENV GOOGLE_API_KEY=""
@@ -29,7 +29,7 @@ RUN yarn build
 FROM base AS runner
 WORKDIR /app
 
-RUN apt-get add proxychains-ng
+RUN apt-get update && apt-get install -y proxychains
 
 ENV PROXY_URL=""
 ENV OPENAI_API_KEY=""
