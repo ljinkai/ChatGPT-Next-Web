@@ -13,7 +13,8 @@ RUN yarn install
 
 FROM base AS builder
 
-RUN apk update && apk add --no-cache git
+# RUN apk update && apk add --no-cache git
+RUN apt-get update && apt-get add --no-cache git
 
 ENV OPENAI_API_KEY=""
 ENV GOOGLE_API_KEY=""
@@ -28,7 +29,7 @@ RUN yarn build
 FROM base AS runner
 WORKDIR /app
 
-RUN apk add proxychains-ng
+RUN apt-get add proxychains-ng
 
 ENV PROXY_URL=""
 ENV OPENAI_API_KEY=""
