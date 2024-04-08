@@ -271,6 +271,15 @@ export function MaskConfig(props: {
         </ListItem>
       </List>
 
+      <InputTextItem
+        text={props.mask.fastgptVar.char_personality}
+        update={(text) =>
+          props.updateMask((mask) => {
+            mask.fastgptVar.char_personality = text;
+          })
+        }
+      />
+
       {props.mask.fastgpt ? (
         <></>
       ) : (
@@ -367,7 +376,7 @@ function InputTextItem(props: {
         value={props.text}
         type="text"
         className={chatStyle["context-content"]}
-        rows={focusingInput ? 5 : 1}
+        rows={focusingInput ? 6 : 1}
         onFocus={() => setFocusingInput(true)}
         onBlur={() => {
           setFocusingInput(false);
