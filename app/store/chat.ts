@@ -74,7 +74,7 @@ export const FASTGPT_MODEL_TOPIC = [
 ];
 
 export const ONEAPI_MODEL = [
-  "abab5.5s-chat",
+  "MiniMax",
   "mixtral",
   // "pygmalion-2-7b",
   "openchat-3.5-0106",
