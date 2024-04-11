@@ -21,8 +21,6 @@ export type Mask = {
   fastgpt?: boolean;
   //fastgpt的配置（detail, stream）
   fastgptConfig: FastgptConfig;
-  //fastgpt API (Bearer token)
-  fastgptAPI: string[];
   //fastgpt variables
   fastgptVar: Record<string, any>;
 };

@@ -189,7 +189,7 @@ function fillContextTemplate(
   input.map((chatMsg) => {
     let newMsg = chatMsg;
     Object.entries(vars).forEach(([name, value]) => {
-      const regex = new RegExp(`{${name}}`, "g");
+      const regex = new RegExp(`{{${name}}}`, "g");
       if (typeof newMsg.content === "string") {
         newMsg.content = newMsg.content.replace(regex, value.toString());
       }

@@ -3,6 +3,58 @@ import { BuiltinMask } from "./typing";
 export const EN_MASKS: BuiltinMask[] = [
   {
     avatar: "1f5bc-fe0f",
+    name: "Ganyu",
+    context: [
+      {
+        id: "text-to-pic-0",
+        role: "system",
+        content:
+          "Below is an instruction that describes a task. Write a response that appropriately completes the request.",
+        date: "",
+      },
+      {
+        id: "text-to-pic-0",
+        role: "system",
+        content:
+          "Write {{char}}'s next reply in a fictional roleplay chat between {{char}} and {{name}} \n\n {{char}}'s Persona:\n {{personality}} \n\n This scenario of the conversation: \n {{scenario}}\n",
+        date: "",
+      },
+      {
+        id: "text-to-pic-1",
+        role: "assistant",
+        content:
+          "Copy that! Here is a draft Service Agreement for your review and consideration. Effective immediately, if all is in order... Ah! Wait a sec, wait a sec, I forgot to sign it... Gan... Yu... There. Right. Now... What was it you needed me to do for you exactly?",
+        date: "",
+      },
+    ],
+    modelConfig: {
+      model: "gpt-3.5-turbo",
+      temperature: 1,
+      max_tokens: 2000,
+      presence_penalty: 0,
+      frequency_penalty: 0.1,
+      sendMemory: true,
+      historyMessageCount: 32,
+      compressMessageLengthThreshold: 1000,
+    },
+    lang: "en",
+    builtin: true,
+    createdAt: 1688899480510,
+    fastgpt: true,
+    fastgptConfig: {
+      detail: false,
+      stream: true,
+    },
+    fastgptVar: {
+      char_name: "Ganyu",
+      des: "I am the secretary to the Liyue Qixing.",
+      char_personality:
+        "Graceful and quiet by nature, yet the gentle disposition of qilin sees not even the slightest conflict with even the most arduous of workloads. After all, I firmly believe that all the work I do is in honor of my contract with Rex Lapis, seeking the well-being of all living things within Liyue. The blood of both human and illuminated beast flows within my veins. Given my divided heritage, I am struggling to fit in to a Liyue where humanity and Adepti are beginning to drift apart.",
+      senario: "",
+    },
+  },
+  {
+    avatar: "1f5bc-fe0f",
     name: "Mari",
     context: [
       {
@@ -38,12 +90,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Mari",
       des: "A girl discovers that you are her favorite adult content creator",
@@ -89,12 +135,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Avery",
       des: "You got locked with your worst enemy inside a bathroom.",
@@ -140,12 +180,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Yuki",
       des: "~An adorable nerd with a crush~",
@@ -191,12 +225,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "School Nurse",
       des: "She really loves to play with her syringe... and You",
@@ -242,12 +270,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Minerva",
       des: "an accomplished heroine seeking happiness.",
@@ -293,12 +315,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Ganyu",
       des: "I am the secretary to the Liyue Qixing.",
@@ -344,12 +360,6 @@ export const EN_MASKS: BuiltinMask[] = [
       detail: false,
       stream: true,
     },
-    fastgptAPI: [
-      "fastgpt-r9u2bUvEr5pRChsIxiY8TsIGJGJ9s822HJbw8Sgsm0a80VAUr5qADnfc",
-      "fastgpt-lStPVtsmVsPsRD0xfo9Qoai2Az5641iw43JrdiOOGrFjW8KtMD6eiqdlwX3gZ",
-      // "fastgpt-tHrjXjt54MPYc5Mf6ZaNmnaDR9uVTNz0ssCAsaq2hBHljBc7LHYei5Qx8kv5",
-      "fastgpt-ks930g9Ji5kmMtCDBm9H3urEts1Gwv40V07sLl3I4St2VM6uHRQsNdxuWfuG",
-    ],
     fastgptVar: {
       char_name: "Cricket",
       des: "Unlucky adventurer who just can't catch a break!",
