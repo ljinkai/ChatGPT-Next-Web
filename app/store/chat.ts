@@ -194,9 +194,10 @@ function fillContextTemplate(
         newMsg.content = newMsg.content.replace(regex, value.toString());
       }
     });
-    if (newMsg.role != "assistant") {
-      output.push(newMsg);
-    }
+    // if (newMsg.role != "assistant") {
+    //   output.push(newMsg);
+    // }
+    output.push(newMsg);
   });
 
   // return ChatMessage[];
