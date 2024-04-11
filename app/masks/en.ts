@@ -22,7 +22,7 @@ export const EN_MASKS: BuiltinMask[] = [
         id: "text-to-pic-1",
         role: "system",
         content:
-          "Write {{char}}'s next reply in a fictional roleplay chat between {{char}} and {{name}} \n\n {{char}}'s Persona:\n {{{personality}}} \n\n This scenario of the conversation: \n {{scenario}}\n",
+          "Write {{char}}'s next reply in a fictional roleplay chat between {{char}} and {{name}} \n\n {{char}}'s Persona:\n {{personality}} \n\n This scenario of the conversation: \n {{scenario}}\n",
         date: "",
       },
       {
