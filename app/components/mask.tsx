@@ -228,11 +228,11 @@ export function MaskConfig(props: {
         <ListItem title={"Char_Name"} subTitle="AI Name">
           <input
             type="text"
-            value={props.mask.fastgptVar.char_name}
+            value={props.mask.fastgptVar.char}
             onChange={(e) => {
               props.updateMask((mask) => {
-                mask.fastgptVar.char_name = e.currentTarget.value;
-                console.log(mask.fastgptVar.char_name);
+                mask.fastgptVar.char = e.currentTarget.value;
+                console.log(mask.fastgptVar.char);
               });
             }}
           ></input>
@@ -261,20 +261,20 @@ export function MaskConfig(props: {
         {/* <ListItem title={"Character personality"}>
           <input
             type="text"
-            value={props.mask.fastgptVar.char_personality}
+            value={props.mask.fastgptVar.personality}
             onChange={(e) => {
               props.updateMask((mask) => {
-                props.mask.fastgptVar.char_personality = e.currentTarget.value;
+                props.mask.fastgptVar.personality = e.currentTarget.value;
               });
             }}
           ></input>
         </ListItem> */}
         <InputTextItem
           title={"Character personality"}
-          text={props.mask.fastgptVar.char_personality}
+          text={props.mask.fastgptVar.personality}
           update={(text) =>
             props.updateMask((mask) => {
-              mask.fastgptVar.char_personality = text;
+              mask.fastgptVar.personality = text;
             })
           }
         />
