@@ -291,21 +291,21 @@ export function MaskConfig(props: {
           }
         />
         <InputTextItem
-          title={"Senario"}
-          text={props.mask.fastgptVar.senario}
+          title={"scenario"}
+          text={props.mask.fastgptVar.scenario}
           update={(text) =>
             props.updateMask((mask) => {
-              props.mask.fastgptVar.senario = text;
+              props.mask.fastgptVar.scenario = text;
             })
           }
         />
-        {/* <ListItem title={"Senario"}>
+        {/* <ListItem title={"scenario"}>
           <input
             type="text"
-            value={props.mask.fastgptVar.senario}
+            value={props.mask.fastgptVar.scenario}
             onChange={(e) => {
               props.updateMask((mask) => {
-                props.mask.fastgptVar.senario = e.currentTarget.value;
+                props.mask.fastgptVar.scenario = e.currentTarget.value;
               });
             }}
           ></input>
