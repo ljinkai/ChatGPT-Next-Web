@@ -237,6 +237,18 @@ export function MaskConfig(props: {
             }}
           ></input>
         </ListItem>
+        <ListItem title={"User Name"} subTitle="Your name">
+          <input
+            type="text"
+            value={props.mask.fastgptVar.name}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                mask.fastgptVar.name = e.currentTarget.value;
+                console.log(mask.fastgptVar.name);
+              });
+            }}
+          ></input>
+        </ListItem>
         {/* <ListItem title={"Des"} subTitle="Brief introduction">
           <input
             type="text"
