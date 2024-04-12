@@ -300,7 +300,7 @@ export function MaskConfig(props: {
           }
         />
         <InputTextItem
-          title={"scenario"}
+          title={"Example Dialogue"}
           text={props.mask.fastgptVar.example_dialogue}
           update={(text) =>
             props.updateMask((mask) => {
