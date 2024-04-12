@@ -67,14 +67,12 @@ export interface ChatSession {
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 export const DEFAULT_FASTGPT_TOPIC = "New Chat";
 export const FASTGPT_MODEL_TOPIC = [
-  "MiniMax",
   "Mixtral",
   // "pygmalion-2-7b",
   "Openchat-3.5",
 ];
 
 export const ONEAPI_MODEL = [
-  "MiniMax",
   "mixtral",
   // "pygmalion-2-7b",
   "openchat-3.5-0106",
@@ -189,14 +187,15 @@ function fillContextTemplate(
   input.map((chatMsg) => {
     let newMsg = chatMsg;
     Object.entries(vars).forEach(([name, value]) => {
-      const regex = new RegExp(`{${name}}`, "g");
+      const regex = new RegExp(`{{${name}}}`, "g");
       if (typeof newMsg.content === "string") {
         newMsg.content = newMsg.content.replace(regex, value.toString());
       }
     });
-    if (newMsg.role != "assistant") {
-      output.push(newMsg);
-    }
+    // if (newMsg.role != "assistant") {
+    //   output.push(newMsg);
+    // }
+    output.push(newMsg);
   });
 
   // return ChatMessage[];

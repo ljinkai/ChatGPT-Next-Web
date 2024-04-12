@@ -228,11 +228,23 @@ export function MaskConfig(props: {
         <ListItem title={"Char_Name"} subTitle="AI Name">
           <input
             type="text"
-            value={props.mask.fastgptVar.char_name}
+            value={props.mask.fastgptVar.char}
             onChange={(e) => {
               props.updateMask((mask) => {
-                mask.fastgptVar.char_name = e.currentTarget.value;
-                console.log(mask.fastgptVar.char_name);
+                mask.fastgptVar.char = e.currentTarget.value;
+                console.log(mask.fastgptVar.char);
+              });
+            }}
+          ></input>
+        </ListItem>
+        <ListItem title={"User Name"} subTitle="Your name">
+          <input
+            type="text"
+            value={props.mask.fastgptVar.name}
+            onChange={(e) => {
+              props.updateMask((mask) => {
+                mask.fastgptVar.name = e.currentTarget.value;
+                console.log(mask.fastgptVar.name);
               });
             }}
           ></input>
@@ -261,39 +273,48 @@ export function MaskConfig(props: {
         {/* <ListItem title={"Character personality"}>
           <input
             type="text"
-            value={props.mask.fastgptVar.char_personality}
+            value={props.mask.fastgptVar.personality}
             onChange={(e) => {
               props.updateMask((mask) => {
-                props.mask.fastgptVar.char_personality = e.currentTarget.value;
+                props.mask.fastgptVar.personality = e.currentTarget.value;
               });
             }}
           ></input>
         </ListItem> */}
         <InputTextItem
           title={"Character personality"}
-          text={props.mask.fastgptVar.char_personality}
+          text={props.mask.fastgptVar.personality}
           update={(text) =>
             props.updateMask((mask) => {
-              mask.fastgptVar.char_personality = text;
+              mask.fastgptVar.personality = text;
             })
           }
         />
         <InputTextItem
-          title={"Senario"}
-          text={props.mask.fastgptVar.senario}
+          title={"scenario"}
+          text={props.mask.fastgptVar.scenario}
           update={(text) =>
             props.updateMask((mask) => {
-              props.mask.fastgptVar.senario = text;
+              props.mask.fastgptVar.scenario = text;
             })
           }
         />
-        {/* <ListItem title={"Senario"}>
+        <InputTextItem
+          title={"Example Dialogue"}
+          text={props.mask.fastgptVar.example_dialogue}
+          update={(text) =>
+            props.updateMask((mask) => {
+              props.mask.fastgptVar.example_dialogue = text;
+            })
+          }
+        />
+        {/* <ListItem title={"scenario"}>
           <input
             type="text"
-            value={props.mask.fastgptVar.senario}
+            value={props.mask.fastgptVar.scenario}
             onChange={(e) => {
               props.updateMask((mask) => {
-                props.mask.fastgptVar.senario = e.currentTarget.value;
+                props.mask.fastgptVar.scenario = e.currentTarget.value;
               });
             }}
           ></input>

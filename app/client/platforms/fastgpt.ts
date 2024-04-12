@@ -96,6 +96,7 @@ export class FastGPTApi implements LLMApi {
     const modelConfig = {
       ...useAppConfig.getState().modelConfig,
       ...useChatStore.getState().currentSession().mask.fastgptConfig,
+      ...useChatStore.getState().currentSession().mask.modelConfig,
       ...{
         model: options.config.model,
         // id: options.config.chatId,

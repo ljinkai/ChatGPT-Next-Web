@@ -1127,6 +1127,11 @@
   background-color: var(--white);
 }
 
+.markdown-body em {
+  font-style: italic;
+  color: pink;
+}
+
 #dmermaid {
   display: none;
 }

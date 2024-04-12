@@ -10,7 +10,7 @@ export const RUNTIME_CONFIG_DOM = "danger-runtime-config";
 
 export const DEFAULT_API_HOST = "https://api.nextchat.dev";
 
-export const DEFAULT_FASTGPT_BASE_URL = "http://192.168.1.206:3000";
+export const DEFAULT_FASTGPT_BASE_URL = "http://222.128.87.232:65098";
 export const OPENAI_BASE_URL = "https://api.openai.com";
 
 export const GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/";
@@ -97,7 +97,8 @@ export const Google = {
   // /api/openai/v1/chat/completions
 };
 
-export const DEFAULT_ONEAPI_MODEL = "abab5.5s-chat,mixtral,openchat-3.5-0106";
+export const DEFAULT_ONEAPI_MODEL =
+  "pygmalion-2-7b-spicychat,openchat-3.5-0106,mistral:7b-instruct-v0.2";
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
 export const DEFAULT_SYSTEM_TEMPLATE = `
 You are ChatGPT, a large language model trained by {{ServiceProvider}}.
