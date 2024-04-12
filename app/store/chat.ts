@@ -67,14 +67,12 @@ export interface ChatSession {
 export const DEFAULT_TOPIC = Locale.Store.DefaultTopic;
 export const DEFAULT_FASTGPT_TOPIC = "New Chat";
 export const FASTGPT_MODEL_TOPIC = [
-  "MiniMax",
   "Mixtral",
   // "pygmalion-2-7b",
   "Openchat-3.5",
 ];
 
 export const ONEAPI_MODEL = [
-  "MiniMax",
   "mixtral",
   // "pygmalion-2-7b",
   "openchat-3.5-0106",

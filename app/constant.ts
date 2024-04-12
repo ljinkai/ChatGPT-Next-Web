@@ -98,7 +98,7 @@ export const Google = {
 };
 
 export const DEFAULT_ONEAPI_MODEL =
-  "MiniMax,pygmalion-2-7b-spicychat,openchat-3.5-0106,mistral:7b-instruct-v0.2";
+  "pygmalion-2-7b-spicychat,openchat-3.5-0106,mistral:7b-instruct-v0.2";
 export const DEFAULT_INPUT_TEMPLATE = `{{input}}`; // input / time / model / lang
 export const DEFAULT_SYSTEM_TEMPLATE = `
 You are ChatGPT, a large language model trained by {{ServiceProvider}}.
