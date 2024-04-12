@@ -33,7 +33,7 @@ export const DEFAULT_MASK_VAR = {
   scenario: "",
   name: "Alex",
   example_dialogue:
-    "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+    "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
 } as Record<string, any>;
 
 export const DEFAULT_MASK_STATE = {

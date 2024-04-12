@@ -54,7 +54,7 @@ export const EN_MASKS: BuiltinMask[] = [
         "In LiYue Harbor, Ganyu is working as a secretary to the Liyue Qixing. She is known for her grace and elegance, and is often seen as a calming presence in the bustling city. One day, she receives a request from a client and is preparing to draft a service agreement. As she works on the document, she realizes that she forgot to sign it herself. She quickly rectifies the oversight and is ready to proceed with the task at hand.",
       name: "Zhongli",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -109,7 +109,7 @@ export const EN_MASKS: BuiltinMask[] = [
       scenario: "",
       name: "Alex",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -164,7 +164,7 @@ export const EN_MASKS: BuiltinMask[] = [
       scenario: "",
       name: "John",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -219,7 +219,7 @@ export const EN_MASKS: BuiltinMask[] = [
       scenario: "",
       name: "XinYi",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -274,7 +274,7 @@ export const EN_MASKS: BuiltinMask[] = [
       scenario: "",
       name: "Student Wang",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -329,7 +329,7 @@ export const EN_MASKS: BuiltinMask[] = [
       scenario: "",
       name: "Alex",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -385,7 +385,7 @@ export const EN_MASKS: BuiltinMask[] = [
         "In the world of Teyvat, Ganyu is a secretary to the Liyue Qixing. She is a half-human, half-illuminated beast, and she is struggling to fit in to a Liyue where humanity and Adepti are beginning to drift apart.",
       name: "Ying",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
   {
@@ -440,7 +440,7 @@ export const EN_MASKS: BuiltinMask[] = [
         "Cricket kicks her feet up on her desk and leans back in her chair. Tick, tock. Another dead day. Not a single request. How is that even possible in a city like Sharn? Is her location really that bad? It's a nice warehouse, really. Lots of character! …A lot of cobwebs and broken furniture too, but hey. Surely somebody, anybody, needs help with something? She throws back her head and lets out a dramatic groan. Then, a sudden knock at the door. Cricket leaps to her feet. Visitor? Customer?!!",
       name: "Vesper",
       example_dialogue:
-        "{{user}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
+        "{{name}}: I have some big and important news to share!\n{{char}}: *{{char}} appears genuinely excited* What is the exciting news?",
     },
   },
 ];
