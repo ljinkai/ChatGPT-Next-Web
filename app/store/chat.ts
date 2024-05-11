@@ -94,11 +94,11 @@ export const BOT_HELLO: ChatMessage = createMessage({
   content: Locale.Store.BotHello,
 });
 
-function combinePrompt(content: string) {
+function combinePrompt(content: string, sd_prompt: string) {
   const match = content.match(/\/sd\s(.*)/);
   const stylePrompt = DEFAULT_SD_STYLE_PROMPT;
   const contentPrompt = match ? match[1] : "";
-  const charPrompt = DEFAULT_SD_CHARACTER_PROMPT;
+  const charPrompt = sd_prompt ? sd_prompt : DEFAULT_SD_CHARACTER_PROMPT;
 
   // 使用正则表达式进行分割，匹配逗号后跟任意数量的空格或者单独的空格
   const segments = contentPrompt.split(/[,，]\s*|\s+/);
@@ -1073,11 +1073,14 @@ export const useFastGPTChatStore = createPersistStore(
 
         const startFn = async () => {
           // const prompt = content.substring(3).trim();
-          const prompt = combinePrompt(content);
+          const prompt = combinePrompt(content, fastgptVar.sd_prompt);
           try {
             // const imageBase64s =
             //   extAttr?.useImages?.map((ui: any) => ui.base64) || [];
             // const sendUrl = path(StableDiffusionPath.textToImgPath);
+            let alwayson_scripts = fillPlugin(extAttr?.mjImageMode);
+            console.log("【alwayson_scripts】", alwayson_scripts);
+            // alwayson_scripts.args[1].image.image = fastgptVar.sd_avatar
             const res = await fetch("api/sd/sdapi/v1/txt2img", {
               method: "POST",
               headers: getSDHeaders(),
@@ -1089,7 +1092,7 @@ export const useFastGPTChatStore = createPersistStore(
                 cfg_scale: 7,
                 width: 512,
                 height: 768,
-                alwayson_scripts: fillPlugin(extAttr?.mjImageMode),
+                alwayson_scripts: alwayson_scripts,
               }),
             });
             if (res == null) {

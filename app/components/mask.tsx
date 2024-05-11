@@ -291,6 +291,25 @@ export function MaskConfig(props: {
           }
         />
         <InputTextItem
+          title={"AD Prompt"}
+          text={props.mask.fastgptVar.sd_prompt}
+          update={(text) =>
+            props.updateMask((mask) => {
+              props.mask.fastgptVar.sd_prompt = text;
+            })
+          }
+        />
+        <InputTextItem
+          title={"SD Avator"}
+          text={props.mask.fastgptVar.sd_avatar}
+          update={(text) =>
+            props.updateMask((mask) => {
+              props.mask.fastgptVar.sd_avator = text;
+            })
+          }
+        />
+
+        <InputTextItem
           title={"scenario"}
           text={props.mask.fastgptVar.scenario}
           update={(text) =>
