@@ -5,7 +5,7 @@ import { prettyObject } from "@/app/utils/format";
 import { NextRequest, NextResponse } from "next/server";
 import { DEFAULT_SD_API_HOST } from "../../../constant";
 
-export async function handle(
+async function handle(
   req: NextRequest,
   { params }: { params: { path: string[] } },
 ) {
