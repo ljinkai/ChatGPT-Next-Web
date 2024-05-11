@@ -18,6 +18,42 @@ const cn = {
     Confirm: "确认",
     Later: "稍后再说",
   },
+  Midjourney: {
+    SelectImgMax: (max: number) => `最多可选择 ${max} 张图片`,
+    InputDisabled: "该模式下不支持输入内容",
+    HasImgTip: "生成图片基于该图",
+    HasText2ImgTip: "提示：文生图模式不使用图片内容",
+    ModeImagineUseImg: "生成写真图片（ControlNet模式）",
+    ModeBlend: "混图模式",
+    ModeDescribe: "文生图模式",
+    NeedInputUseImgPrompt:
+      "垫图模式下需要输入内容才能使用图片，请以“/mj”开头输入内容",
+    BlendMinImg: (min: number, max: number) =>
+      `混图模式下至少需要 ${min} 张图片，至多 ${max} 张图片`,
+    TaskErrUnknownType: "任务提交失败：未知的任务类型",
+    TaskErrNotSupportType: (type: string) =>
+      `任务提交失败：不支持的任务类型 -> ${type}`,
+    StatusCode: (code: number) => `状态码：${code}`,
+    TaskSubmitErr: (err: string) => `任务提交失败：${err}`,
+    RespBody: (body: string) => `响应体：${body}`,
+    None: "无",
+    UnknownError: "未知错误",
+    UnknownReason: "未知原因",
+    TaskPrefix: (prompt: string, taskId: string) =>
+      `**画面描述:** ${prompt}\n**任务ID:** ${taskId}\n`,
+    PleaseWait: "请稍等片刻",
+    TaskSubmitOk: "任务提交成功",
+    TaskStatusFetchFail: "任务状态获取失败",
+    TaskStatus: "任务状态",
+    TaskRemoteSubmit: "任务已提交至Midjourney服务器",
+    TaskProgressTip: (progress: number | undefined) =>
+      `任务正在运行${progress ? `，当前进度：${progress}` : ""}`,
+    TaskNotStart: "任务尚未开始",
+    Url: "地址",
+    ImageAgent: "图像代理",
+    ImageAgentOpenTip:
+      "开启之后，返回的Midjourney图片将会通过本程序自身代理，所以本程序需要处于可以访问cdn.discordapp.com的网络环境中才有效",
+  },
   ChatItem: {
     ChatItemCount: (count: number) => `${count} 条对话`,
   },

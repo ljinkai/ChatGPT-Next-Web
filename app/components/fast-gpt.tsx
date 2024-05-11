@@ -750,7 +750,7 @@ function _Chat() {
   };
 
   const doSubmit = (userInput: string) => {
-    console.log("[Chat] submit: ", userInput);
+    console.log("[Chat] submit1: ", userInput);
     if (userInput.trim() === "") return;
     const matchCommand = chatCommands.match(userInput);
     if (matchCommand.matched) {
@@ -764,13 +764,18 @@ function _Chat() {
     // Branch One-api:
     // One-api的调用只需要更改不同的模型名字即可，所以这里只需要统计模型数量即可
 
-    const oneApiModels = config.oneApiModel.split(",");
-    const sendNumber = oneApiModels.length;
-    for (let i = 0; i < sendNumber; i++) {
-      chatStore
-        .onUserInput(userInput, oneApiModels[i], attachImages, i)
-        .then(() => setIsLoading(false));
+    if (userInput.startsWith("/sd")) {
+      chatStore.onUserInput(userInput, "").then(() => setIsLoading(false));
+    } else {
+      const oneApiModels = config.oneApiModel.split(",");
+      const sendNumber = oneApiModels.length;
+      for (let i = 0; i < sendNumber; i++) {
+        chatStore
+          .onUserInput(userInput, oneApiModels[i], attachImages, i)
+          .then(() => setIsLoading(false));
+      }
     }
+
     setAttachImages([]);
     localStorage.setItem(LAST_INPUT_KEY, userInput);
     setUserInput("");
@@ -1116,6 +1121,7 @@ function _Chat() {
 
     const dom = inputRef.current;
     return () => {
+      console.log("【setItem】", key, dom?.value ?? "");
       localStorage.setItem(key, dom?.value ?? "");
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1295,6 +1301,7 @@ function _Chat() {
       >
         {messages.map((message, i) => {
           const isUser = message.role === "user";
+          const isSDContent = message.attr?.imgUrls;
           const isContext = i < context.length;
           const isSystem = message.role === "system";
           const showActions =
@@ -1381,6 +1388,10 @@ function _Chat() {
                             </>
                           )}
                         </div>
+                      ) : message.model == "stable-diffusion" ? (
+                        <div className={styles["chat-message-fastgpt-name"]}>
+                          {message.model}
+                        </div>
                       ) : (
                         <div className={styles["chat-message-fastgpt-name"]}>
                           {oneAPIModelsName[fastChatNum]}
@@ -1409,6 +1420,19 @@ function _Chat() {
                         parentRef={scrollRef}
                         defaultShow={i >= messages.length - 6}
                       />
+                      {isSDContent && (
+                        <div className={styles["chat-sd-img"]}>
+                          {message.attr?.imgUrls?.map(
+                            (
+                              img: string | undefined,
+                              index: React.Key | null | undefined,
+                            ) => (
+                              <img key={index} src={img} alt="Base64 Image" />
+                            ),
+                          )}
+                          {/* <img src={message.attr?.imgUrls} alt="Base64 Image" /> */}
+                        </div>
+                      )}
                       {getMessageImages(message).length == 1 && (
                         <img
                           className={styles["chat-message-item-image"]}

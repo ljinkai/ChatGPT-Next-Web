@@ -219,3 +219,10 @@ export function getHeaders(FastGptApiKey: string = "") {
 
   return headers;
 }
+
+export function getSDHeaders() {
+  let headers: Record<string, string> = {
+    "Content-Type": "application/json",
+  };
+  return headers;
+}

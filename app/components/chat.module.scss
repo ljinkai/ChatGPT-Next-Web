@@ -1,5 +1,21 @@
 @import "../styles/animation.scss";
 
+
+.chat-sd-img {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  /* 创建两列，每列占可用空间的平分 */
+  gap: 0px;
+  /* 可调整网格间距 */
+}
+
+.chat-sd-img img {
+  width: 200px;
+  height: 280px;
+  object-fit: cover;
+  /* 确保图片覆盖整个容器，但可能会被裁剪 */
+}
+
 .attach-images {
   position: absolute;
   left: 30px;

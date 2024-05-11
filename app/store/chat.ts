@@ -13,8 +13,18 @@ import {
   StoreKey,
   SUMMARIZE_MODEL,
   GEMINI_SUMMARIZE_MODEL,
+  DEFAULT_SD_STYLE_PROMPT,
+  DEFAULT_SD_CHARACTER_PROMPT,
+  DEFAULT_SD_NEGATIVE_PROMPT,
+  DEFAULT_CONTROLNET,
+  DEFAULT_ADETAILER,
 } from "../constant";
-import { ClientApi, RequestMessage, MultimodalContent } from "../client/api";
+import {
+  ClientApi,
+  RequestMessage,
+  MultimodalContent,
+  getSDHeaders,
+} from "../client/api";
 import { ChatControllerPool } from "../client/controller";
 import { prettyObject } from "../utils/format";
 import { estimateTokenLength } from "../utils/token";
@@ -27,6 +37,7 @@ export type ChatMessage = RequestMessage & {
   isError?: boolean;
   id: string;
   model?: ModelType;
+  attr?: any;
 };
 
 export type FastgptConfig = {
@@ -82,6 +93,45 @@ export const BOT_HELLO: ChatMessage = createMessage({
   role: "assistant",
   content: Locale.Store.BotHello,
 });
+
+function combinePrompt(content: string) {
+  const match = content.match(/\/sd\s(.*)/);
+  const stylePrompt = DEFAULT_SD_STYLE_PROMPT;
+  const contentPrompt = match ? match[1] : "";
+  const charPrompt = DEFAULT_SD_CHARACTER_PROMPT;
+
+  // 使用正则表达式进行分割，匹配逗号后跟任意数量的空格或者单独的空格
+  const segments = contentPrompt.split(/[,，]\s*|\s+/);
+  const charSegments = charPrompt.split(/[,，]\s*|\s+/);
+
+  // 遍历每个片段，若该片段不包含在charSegments中，则添加权重":1.6"并用括号包围
+  const charSegmentsSet = new Set(charSegments);
+  const diffSegments = segments.filter(
+    (segment) => !charSegmentsSet.has(segment),
+  );
+  const weightedSegments = diffSegments.map((segment) => `(${segment}:1.1)`);
+
+  // 重新用逗号加空格组合处理后的片段
+  const result = weightedSegments.join(", ");
+
+  return [stylePrompt, result, charPrompt].join(", ");
+}
+
+function fillPlugin(mode: string) {
+  // plugins为一个数组，每一个元素为一个对象，对象的key为插件名，value为插件的配置
+  let plugins: Record<string, any> = {
+    ADetailer: DEFAULT_ADETAILER,
+  };
+  // 默认使用ADetailer插件，若为IMAGINE模式则增加ControlNet插件
+  if (mode !== "IMAGINE") {
+    console.log("[Use Plugin]: ", plugins);
+    return plugins;
+  } else {
+    plugins["controlnet"] = DEFAULT_CONTROLNET;
+    console.log("[Use Plugin]: ", plugins);
+    return plugins;
+  }
+}
 
 function createEmptySession(): ChatSession {
   return {
@@ -353,6 +403,7 @@ export const useChatStore = createPersistStore(
           session.messages = session.messages.concat();
           session.lastUpdate = Date.now();
         });
+
         get().updateStat(message);
         get().summarizeSession();
       },
@@ -914,6 +965,7 @@ export const useFastGPTChatStore = createPersistStore(
           session.messages = session.messages.concat();
           session.lastUpdate = Date.now();
         });
+        console.log("【onNewMessage】", message);
         get().updateStat(message);
         get().summarizeSession();
       },
@@ -923,12 +975,14 @@ export const useFastGPTChatStore = createPersistStore(
         oneApiModel: string,
         attachImages?: string[],
         oneApiNum?: number,
+        extAttr?: any,
       ) {
         const session = get().currentSession();
         const modelConfig = session.mask.modelConfig;
         const fastgptVar = session.mask.fastgptVar;
         const userContent = fillTemplateWith(content, modelConfig);
         console.log("[User Input] after template: ", userContent);
+        console.log("[User mask]: ", fastgptVar, modelConfig);
 
         let mContent: string | MultimodalContent[] = userContent;
 
@@ -959,7 +1013,10 @@ export const useFastGPTChatStore = createPersistStore(
           role: "assistant",
           streaming: true,
           model: modelConfig.model,
+          attr: {},
         });
+
+        console.log("[botMessage]", botMessage);
 
         // get recent messages(except mask)
         const memoryMessages = get().getMessagesWithMemory(oneApiNum);
@@ -973,9 +1030,10 @@ export const useFastGPTChatStore = createPersistStore(
           fastgptVar,
         );
         let sendMessages = [] as ChatMessage[];
-        // console.log("[RecentMessages]: ", recentMessages);
+        console.log("[RecentMessages]: ", recentMessages);
 
         sendMessages = recentMessages.concat(memoryMessages);
+        console.log("【oneApiNum】", oneApiNum);
         if (oneApiNum == 0) {
           sendMessages = sendMessages.concat(userMessage);
         }
@@ -993,6 +1051,7 @@ export const useFastGPTChatStore = createPersistStore(
         // const sendMessages = emptyMessages.concat(userMessage);
         // sendMessages = sendMessages.concat(memoryMessages);
         const messageIndex = get().currentSession().messages.length + 1;
+        const sessionId = get().currentSession().id;
 
         // save user's and bot's message
         get().updateCurrentSession((session) => {
@@ -1008,72 +1067,148 @@ export const useFastGPTChatStore = createPersistStore(
           } else {
             session.messages = session.messages.concat([botMessage]);
           }
+          console.log("【updateCurrentSession】", savedUserMessage, botMessage);
+          console.log("【session.messages】", session.messages);
         });
 
-        var api: ClientApi;
-        api = new ClientApi(ModelProvider.FastGPT);
-
-        // else if (modelConfig.model.startsWith("gemini")) {
-        //   api = new ClientApi(ModelProvider.GeminiPro);
-        // } else {
-        //   api = new ClientApi(ModelProvider.GPT);
-        // }
-        // make request
-        api.llm.chat({
-          messages: sendMessages,
-          config: {
-            ...modelConfig,
-            stream: session.mask.fastgptConfig.stream,
-            variables: session.mask.fastgptVar,
-            model: oneApiModel,
-          },
-          onUpdate(message) {
-            botMessage.streaming = true;
-            if (message) {
-              botMessage.content = message;
-            }
-            get().updateCurrentSession((session) => {
-              session.messages = session.messages.concat();
+        const startFn = async () => {
+          // const prompt = content.substring(3).trim();
+          const prompt = combinePrompt(content);
+          try {
+            // const imageBase64s =
+            //   extAttr?.useImages?.map((ui: any) => ui.base64) || [];
+            // const sendUrl = path(StableDiffusionPath.textToImgPath);
+            const res = await fetch("api/sd/sdapi/v1/txt2img", {
+              method: "POST",
+              headers: getSDHeaders(),
+              body: JSON.stringify({
+                prompt: prompt,
+                negative_prompt: DEFAULT_SD_NEGATIVE_PROMPT,
+                batch_size: 2,
+                steps: 20,
+                cfg_scale: 7,
+                width: 512,
+                height: 768,
+                alwayson_scripts: fillPlugin(extAttr?.mjImageMode),
+              }),
             });
-          },
-          onFinish(message) {
-            botMessage.streaming = false;
-            if (message) {
-              botMessage.content = message;
-              get().onNewMessage(botMessage);
+            if (res == null) {
+              botMessage.streaming = false;
+              return;
             }
-            ChatControllerPool.remove(session.id, botMessage.id);
-          },
-          onError(error) {
-            const isAborted = error.message.includes("aborted");
-            botMessage.content +=
-              "\n\n" +
-              prettyObject({
-                error: true,
-                message: error.message,
+            if (!res.ok) {
+              const text = await res.text();
+              botMessage.content = text;
+            } else {
+              // res已返回json
+              const resJson = await res.json();
+              // 发送失败
+              if (!resJson.images) {
+                botMessage.content = Locale.Midjourney.TaskSubmitErr(
+                  resJson.msg ||
+                    resJson.error ||
+                    Locale.Midjourney.UnknownError,
+                );
+              } else {
+                // 处理图像
+                botMessage.attr.imgUrls = [];
+                for (let i = 0; i < resJson.images.length; i++) {
+                  const imgUrl = `data:image/jpeg;base64,${resJson.images[i]}`;
+                  botMessage.attr.imgUrls[i] = imgUrl;
+                }
+                botMessage.attr.status = resJson.status;
+                botMessage.content = prompt;
+              }
+            }
+          } catch (e: any) {
+            console.error(e);
+            botMessage.content = Locale.Midjourney.TaskSubmitErr(
+              e?.error || e?.message || Locale.Midjourney.UnknownError,
+            );
+          } finally {
+            ChatControllerPool.remove(sessionId, botMessage.id ?? messageIndex);
+            botMessage.streaming = false;
+          }
+        };
+
+        // start stable-diffusion task
+        if (
+          content.toLowerCase().startsWith("/sd") ||
+          content.toLowerCase().startsWith("/SD")
+        ) {
+          botMessage.model = "stable-diffusion";
+
+          await startFn();
+          console.log("【botMessage】", botMessage);
+          // get().onNewMessage(botMessage);
+          // set(() => ({}));
+          // extAttr?.setAutoScroll(true);
+        } else {
+          var api: ClientApi;
+          api = new ClientApi(ModelProvider.FastGPT);
+
+          // else if (modelConfig.model.startsWith("gemini")) {
+          //   api = new ClientApi(ModelProvider.GeminiPro);
+          // } else {
+          //   api = new ClientApi(ModelProvider.GPT);
+          // }
+          // make request
+          api.llm.chat({
+            messages: sendMessages,
+            config: {
+              ...modelConfig,
+              stream: session.mask.fastgptConfig.stream,
+              variables: session.mask.fastgptVar,
+              model: oneApiModel,
+            },
+            onUpdate(message) {
+              botMessage.streaming = true;
+              if (message) {
+                botMessage.content = message;
+              }
+              get().updateCurrentSession((session) => {
+                session.messages = session.messages.concat();
               });
-            botMessage.streaming = false;
-            userMessage.isError = !isAborted;
-            botMessage.isError = !isAborted;
-            get().updateCurrentSession((session) => {
-              session.messages = session.messages.concat();
-            });
-            ChatControllerPool.remove(
-              session.id,
-              botMessage.id ?? messageIndex,
-            );
+            },
+            onFinish(message) {
+              botMessage.streaming = false;
+              if (message) {
+                botMessage.content = message;
+                get().onNewMessage(botMessage);
+              }
+              ChatControllerPool.remove(session.id, botMessage.id);
+            },
+            onError(error) {
+              const isAborted = error.message.includes("aborted");
+              botMessage.content +=
+                "\n\n" +
+                prettyObject({
+                  error: true,
+                  message: error.message,
+                });
+              botMessage.streaming = false;
+              userMessage.isError = !isAborted;
+              botMessage.isError = !isAborted;
+              get().updateCurrentSession((session) => {
+                session.messages = session.messages.concat();
+              });
+              ChatControllerPool.remove(
+                session.id,
+                botMessage.id ?? messageIndex,
+              );
 
-            console.error("[Chat] failed ", error);
-          },
-          onController(controller) {
-            // collect controller for stop/retry
-            ChatControllerPool.addController(
-              session.id,
-              botMessage.id ?? messageIndex,
-              controller,
-            );
-          },
-        });
+              console.error("[Chat] failed ", error);
+            },
+            onController(controller) {
+              // collect controller for stop/retry
+              ChatControllerPool.addController(
+                session.id,
+                botMessage.id ?? messageIndex,
+                controller,
+              );
+            },
+          });
+        }
       },
 
       getMemoryPrompt() {

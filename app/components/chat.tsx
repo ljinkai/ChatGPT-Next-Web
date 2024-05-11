@@ -1273,6 +1273,7 @@ function _Chat() {
       >
         {messages.map((message, i) => {
           const isUser = message.role === "user";
+          const isSDContent = message.attr?.imgUrls;
           const isContext = i < context.length;
           const showActions =
             i > 0 &&
@@ -1409,6 +1410,17 @@ function _Chat() {
                       parentRef={scrollRef}
                       defaultShow={i >= messages.length - 6}
                     />
+                    {isSDContent && (
+                      <div className={styles["chat-sd-img"]}>
+                        {message.attr?.imgUrls?.map(
+                          (
+                            img: string | undefined,
+                            index: React.Key | null | undefined,
+                          ) => <img key={index} src={img} alt="Base64 Image" />,
+                        )}
+                        {/* <img src={message.attr?.imgUrls} alt="Base64 Image" /> */}
+                      </div>
+                    )}
                     {getMessageImages(message).length == 1 && (
                       <img
                         className={styles["chat-message-item-image"]}
