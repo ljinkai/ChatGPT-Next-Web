@@ -1304,6 +1304,8 @@ function _Chat() {
           const isSDContent = message.attr?.imgUrls;
           const isContext = i < context.length;
           const isSystem = message.role === "system";
+          const modelStr = message.model?.toString();
+          const sdFlag = modelStr == "stable-diffusion" ? true : false;
           const showActions =
             i > 0 &&
             !(message.preview || message.content.length === 0) &&
@@ -1388,13 +1390,11 @@ function _Chat() {
                             </>
                           )}
                         </div>
-                      ) : message.model == "stable-diffusion" ? (
-                        <div className={styles["chat-message-fastgpt-name"]}>
-                          {message.model}
-                        </div>
                       ) : (
                         <div className={styles["chat-message-fastgpt-name"]}>
-                          {oneAPIModelsName[fastChatNum]}
+                          {sdFlag
+                            ? message.model
+                            : oneAPIModelsName[fastChatNum]}
                         </div>
                       )}
                     </div>
