@@ -303,6 +303,15 @@ export const DEFAULT_MODELS = [
       providerType: "google",
     },
   },
+  {
+    name: "stable-diffusion",
+    available: true,
+    provider: {
+      id: "stable-diffusion",
+      providerName: "stable-diffusion",
+      providerType: "stable-diffusion",
+    },
+  },
 ] as const;
 
 export const CHAT_PAGE_SIZE = 15;
