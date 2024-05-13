@@ -304,7 +304,7 @@ export function MaskConfig(props: {
           text={props.mask.fastgptVar.sd_avatar}
           update={(text) =>
             props.updateMask((mask) => {
-              props.mask.fastgptVar.sd_avator = text;
+              props.mask.fastgptVar.sd_avatar = text;
             })
           }
         />

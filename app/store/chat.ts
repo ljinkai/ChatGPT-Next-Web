@@ -1080,7 +1080,10 @@ export const useFastGPTChatStore = createPersistStore(
             // const sendUrl = path(StableDiffusionPath.textToImgPath);
             let alwayson_scripts = fillPlugin(extAttr?.mjImageMode);
             console.log("【alwayson_scripts】", alwayson_scripts);
-            // alwayson_scripts.args[1].image.image = fastgptVar.sd_avatar
+            if (fastgptVar.sd_avatar) {
+              alwayson_scripts.controlnet.args[0].image.image =
+                fastgptVar.sd_avatar;
+            }
             const res = await fetch("api/sd/sdapi/v1/txt2img", {
               method: "POST",
               headers: getSDHeaders(),

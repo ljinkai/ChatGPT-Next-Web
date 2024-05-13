@@ -765,7 +765,9 @@ function _Chat() {
     // One-api的调用只需要更改不同的模型名字即可，所以这里只需要统计模型数量即可
 
     if (userInput.startsWith("/sd")) {
-      chatStore.onUserInput(userInput, "").then(() => setIsLoading(false));
+      chatStore
+        .onUserInput(userInput, "", [], 0, { mjImageMode: "IMAGINE" })
+        .then(() => setIsLoading(false));
     } else {
       const oneApiModels = config.oneApiModel.split(",");
       const sendNumber = oneApiModels.length;
